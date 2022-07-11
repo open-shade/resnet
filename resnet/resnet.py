@@ -32,14 +32,14 @@ class RosIO(Node):
         super().__init__('minimal_subscriber')
         self.image_subscription = self.create_subscription(
             Image,
-            '/resnet/sub/image_raw',
+            '/resnet/image_raw',
             self.listener_callback,
             10
         )
 
         self.result_publisher = self.create_publisher(
             String,
-            '/resnet/pub/result',
+            '/resnet/result',
             1
         )
 
