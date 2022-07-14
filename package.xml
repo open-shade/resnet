@@ -3,9 +3,9 @@
 <package format="3">
   <name>resnet</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="lidar@todo.todo">lidar</maintainer>
-  <license>TODO: License declaration</license>
+  <description>ResNet was first released in 2015 and has become a staple vision algorithm. It utilizes residual connections to pass along more information after each transformation (residuals) to offer greater accuracy and performance and is a backbone for modern segmentation algorithms.</description>
+  <maintainer email="support@shaderobotics.com">Shade Robotics</maintainer>
+  <license>apache-2.0</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
