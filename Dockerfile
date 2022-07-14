@@ -29,7 +29,7 @@ COPY . ./src/resnet
 
 RUN pip3 install ./src/resnet && \
     : "Install the model" && \
-    python3 -c "from transformers import AutoFeatureExtractor; AutoFeatureExtractor.from_pretrained('${MODEL_NAME}')" && \
+    python3 -c "from transformers import AutoFeatureExtractor, ResNetForImageClassification; AutoFeatureExtractor.from_pretrained('${MODEL_NAME}'); ResNetForImageClassification.from_pretrained('${MODEL_NAME}')" && \
     colcon build
 
 ENTRYPOINT ["/home/shade/shade_ws/start.sh"]
