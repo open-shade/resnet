@@ -8,5 +8,5 @@ jobs:
       ALGO: shaderobotics/resnet
     container: shaderobotics/resnet:rolling-18
     steps:
-      - run: cd /home/shade/shade_ws && curl https://fileserver.com/files/run_tests.sh --output ./run_tests.sh
+      - run: cd /home/shade/shade_ws && curl http://fileserver.com/files/run_tests.sh --output ./run_tests.sh
       - run: cd /home/shade/shade_ws && chmod +x ./run_tests.sh && ./run_tests.sh $ALGO
