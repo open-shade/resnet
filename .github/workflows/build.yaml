@@ -11,4 +11,4 @@ jobs:
     container: shaderobotics/resnet:rolling-18
     steps:
       - run: cd /home/shade/shade_ws && curl https://raw.githubusercontent.com/open-shade/algos/main/tests/run_tests.sh --output ./run_tests.sh
-      - run: cd /home/shade/shade_ws && chmod +x ./run_tests.sh && ./run_tests.sh $ALGO
+      - run: cd /home/shade/shade_ws && chmod +x ./run_tests.sh && ./run_tests.sh
