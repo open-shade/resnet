@@ -7,20 +7,20 @@ steps:
     args:
       - run
       - '--privileged'
-      - 'linuxkit/binfmt:v0.7'
+      - 'linuxkit/binfmt:v0.8'
     id: initialize-qemu
   - name: gcr.io/cloud-builders/docker
     args:
       - buildx
       - create
       - '--name'
-      - mybuilder
+      - buildxbuilder
     id: create-builder
   - name: gcr.io/cloud-builders/docker
     args:
       - buildx
       - use
-      - mybuilder
+      - buildxbuilder
     id: select-builder
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
@@ -30,7 +30,7 @@ options:
   env:
     - DOCKER_CLI_EXPERIMENTAL=enabled
 substitutions:
-  _DOCKER_BUILDX_PLATFORMS: 'linux/amd64,linux/arm64'
+  _DOCKER_BUILDX_PLATFORMS: 'linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8'
 availableSecrets:
   secretManager:
     - versionName: projects/shade-prod/secrets/DOCKER_PASSWORD_SECRET_NAME/versions/1
