@@ -3,14 +3,34 @@ steps:
     entrypoint: 'bash'
     args: ['-c', 'docker login --username=$$USERNAME --password=$$PASSWORD']
     secretEnv: ['USERNAME', 'PASSWORD']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - run
+      - '--privileged'
+      - 'linuxkit/binfmt:v0.7'
+    id: initialize-qemu
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - buildx
+      - create
+      - '--name'
+      - mybuilder
+    id: create-builder
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - buildx
+      - use
+      - mybuilder
+    id: select-builder
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'docker build -t $$USERNAME/resnet:${_ROS_VERSION}-${_TAG} . --build-arg ROS_VERSION=${_ROS_VERSION} --build-arg MODEL_VERSION=${_MODEL_VERSION} --build-arg ORGANIZATION=${_ORGANIZATION}']
+    args: ['-c', 'docker buildx build --platform $_DOCKER_BUILDX_PLATFORMS -t $$USERNAME/resnet:${_ROS_VERSION}-${_TAG} . --build-arg ROS_VERSION=${_ROS_VERSION} --build-arg MODEL_VERSION=${_MODEL_VERSION} --build-arg ORGANIZATION=${_ORGANIZATION} --push']
     secretEnv: ['USERNAME']
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'docker push $$USERNAME/resnet:${_ROS_VERSION}-${_TAG}']
-    secretEnv: ['USERNAME']
+options:
+  env:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
+substitutions:
+  _DOCKER_BUILDX_PLATFORMS: 'linux/amd64,linux/arm64'
 availableSecrets:
   secretManager:
     - versionName: projects/shade-prod/secrets/DOCKER_PASSWORD_SECRET_NAME/versions/1
